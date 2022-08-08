@@ -17,7 +17,7 @@ function App() {
     const GetRequestHandler = () => {
         setGet([])
     }
-const test = 1
+const test = 3
     useEffect(() =>
     {
         fetch('https://jsonplaceholder.typicode.com/posts')
