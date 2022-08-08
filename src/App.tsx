@@ -1,24 +1,47 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Button from "./components/Button";
+
+type getType = {
+    "postId": number
+    "id": number
+    "name": string
+    "email": string
+    "body": string
+}
 
 function App() {
+    const[get, setGet] = useState<Array<getType>>([])
+
+    const GetRequestHandler = () => {
+        setGet([])
+    }
+
+    useEffect(() =>
+    {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then((response) => response.json())
+            .then((json) => setGet(json));
+    }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Button nickName={'Get Request'} callBack={GetRequestHandler}/>
+        <p></p>
+        <ul>
+        {get.map((el)=> {
+            return(
+
+                   <li>
+                       <span>{el.id}</span>
+                       <span>{el.body}</span>
+                       <span>{el.postId}</span>
+                   </li>
+
+            )
+        })}
+        </ul>
     </div>
   );
 }
